@@ -69,22 +69,9 @@ help:
 # Build specific images.
 # -----------------------------------------------------------------------------
 
-.PHONY: vmware-iso
-vmware-iso:
-	packer build -only=ephemeral-ansible-agent.vmware-iso.ansible .
-
-
-.PHONY: virtualbox-iso
-virtualbox-iso:
-	packer build -only=ephemeral-ansible-agent.virtualbox-iso.ansible .
-
 .PHONY: azure-arm
 azure-arm:
 	packer build -only=ephemeral-ansible-agent.azure-arm.ansible .
-
-.PHONY: amazon-ebs
-amazon-ebs:
-	packer build -only=ephemeral-ansible-agent.amazon-ebs.ansible .
 
 # -----------------------------------------------------------------------------
 # Clean up targets.
