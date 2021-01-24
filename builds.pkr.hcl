@@ -2,10 +2,7 @@ build {
   name = "ephemeral-ansible-agent"
 
   sources = [
-    "source.virtualbox-iso.ansible",
-    "source.vmware-iso.ansible",
     "source.azure-arm.ansible",
-    "source.amazon-ebs.ansible",
   ]
 
   provisioner "shell-local" {
@@ -28,28 +25,13 @@ build {
       "sudo rm -rf /root/.ssh /home/${build.User}/.ssh"
     ]
   }
-
-  post-processor "shell-local" {
-    only = [
-      "source.vmware-iso.ansible",
-    ]
-
-    inline = [
-      "ovftool \\",
-      "${PWD}/output-vmware-iso-{{user `build_timestamp`}}/{{user `image_name`}}-{{user `image_version`}}.vmx \\",
-      "${PWD}/output-vmware-iso-{{user `build_timestamp`}}/{{user `image_name`}}-{{user `image_version`}}.ova"
-    ]
-  }
 }
 
 build {
   name = "local-ansible-agent"
 
   sources = [
-    "source.virtualbox-iso.ansible",
-    "source.vmware-iso.ansible",
     "source.azure-arm.ansible",
-    "source.amazon-ebs.ansible",
   ]
 
   provisioner "shell-local" {
@@ -73,57 +55,11 @@ build {
 
   provisioner "shell" {
     only = [
-      "source.virtualbox-iso.ansible",
-      "source.vmware-iso.ansible",
       "source.azure-arm.ansible",
-      "source.amazon-ebs.ansible",
     ]
 
     inline = [
       "sudo rm -rf /root/.ssh /home/${build.User}/.ssh"
     ]
-  }
-
-  post-processor "shell-local" {
-    only = [
-      "source.vmware-iso.ansible",
-    ]
-
-    inline = [
-      "ovftool \\",
-      "${PWD}/output-vmware-iso-{{user `build_timestamp`}}/{{user `image_name`}}-{{user `image_version`}}.vmx \\",
-      "${PWD}/output-vmware-iso-{{user `build_timestamp`}}/{{user `image_name`}}-{{user `image_version`}}.ova"
-    ]
-  }
-}
-
-build {
-  name = "local-ansible-agent-for-docker"
-
-  sources = [
-    "source.docker.ansible",
-  ]
-
-  provisioner "ansible" {
-    playbook_file = format("%s/playbook.yml", var.ansible_playbook_path)
-  }
-
-  post-processors {
-    post-processor "docker-tag" {
-      force = true
-      keep_input_artifact = true
-      repository = var.container_repository
-      tag = [
-        "latest",
-        format("%s-%s",var.os_name,var.git_code_version),
-      ]
-    }
-
-    post-processor "docker-push" {
-      login = true
-      login_server = var.container_registry_server
-      login_username = var.container_registry_username
-      login_password = var.container_registry_password
-    }
   }
 }
