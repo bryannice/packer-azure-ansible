@@ -41,8 +41,6 @@ GIT_VERSION_LONG := $(shell git describe --always --tags --long --dirty)
 # -----------------------------------------------------------------------------
 
 .EXPORT_ALL_VARIABLES:
-ANSIBLE_VERSION ?= 2.10.5
-ANSIBLE_PLAYBOOK_CODE_VERSION ?= master
 PKR_VAR_image_description ?= "Packer Build"
 PKR_VAR_image_name ?= test-build
 PKR_VAR_image_version ?= 1.0.0
@@ -69,9 +67,9 @@ help:
 # Build specific images.
 # -----------------------------------------------------------------------------
 
-.PHONY: azure-arm
-azure-arm:
-	packer build -only=ephemeral-ansible-agent.azure-arm.ansible .
+.PHONY: azure-machine-image
+azure-machine-image:
+	packer build .
 
 # -----------------------------------------------------------------------------
 # Clean up targets.
