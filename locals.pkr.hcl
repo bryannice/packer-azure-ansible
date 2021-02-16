@@ -6,21 +6,25 @@ locals {
       image_offer = "CentOS"
       image_publisher = "OpenLogic"
       image_sku = "7_8"
+      os_type = "linux"
     }
     centos8-2 = {
       image_offer = "CentOS"
       image_publisher = "OpenLogic"
       image_sku = "8_2"
+      os_type = "linux"
     }
     debian9-13 = {
       image_offer = "Debian"
       image_publisher = "credativ"
       image_sku = "9"
+      os_type = "linux"
     }
     debian10-07 = {
       image_offer = "debian-10"
       image_publisher = "Debian"
       image_sku = "10"
+      os_type = "linux"
     }
   }
 }

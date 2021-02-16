@@ -22,7 +22,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "sudo rm -rf /root/.ssh /home/${build.User}/.ssh"
+      "sudo rm -rf /root/.ssh /home/${build.User}"
     ]
   }
 }
